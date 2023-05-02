@@ -1,21 +1,18 @@
 package server.modules;
 
-import org.apache.commons.lang3.SerializationUtils;
 import org.example.transmission.DataToClient;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.SocketChannel;
-import java.nio.file.Paths;
+import java.net.Socket;
 import java.util.Arrays;
 import java.util.List;
 
-public class ServerSender implements Serializable {
+public class ServerSender implements Runnable {
     private List<String> result;
     private Object[] arguments = {};
+    private Socket socket;
 
     public ServerSender(List<String> result) {
         this.result = result;
@@ -38,24 +35,19 @@ public class ServerSender implements Serializable {
         return arguments;
     }
 
-    public void send(SelectionKey key) {
-        SocketChannel socketChannel = (SocketChannel) key.channel();
+    @Override
+    public void run() {
         try {
             DataToClient dataToClient = new DataToClient(result, arguments);
-            byte[] bytes = SerializationUtils.serialize(dataToClient);
-            socketChannel.write(ByteBuffer.wrap(bytes));
+            ObjectOutputStream stream = new ObjectOutputStream(socket.getOutputStream());
+            stream.writeObject(dataToClient);
 
-           if (Arrays.binarySearch(arguments, "exit") >= 0) {
-                try (FileChannel fileChannel = FileChannel.open(Paths.get("objects.xml"))) {
-                    fileChannel.transferTo(0, fileChannel.size(), socketChannel);
-                    socketChannel.close();
-                }
-            }
         } catch (IOException ignored) {} //возникает, когда клиент отключается
-        try {
-            socketChannel.configureBlocking(false);
-            socketChannel.register(key.selector(), SelectionKey.OP_READ);
-        } catch (IOException e) {e.printStackTrace();}
+
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
     }
 
     @Override

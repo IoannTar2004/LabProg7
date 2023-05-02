@@ -1,13 +1,12 @@
 package server.modules;
 
-import org.apache.commons.lang3.SerializationUtils;
 import org.example.transmission.DataToServer;
 import server.commands.*;
 import server.commands.Command;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
+import java.io.ObjectInputStream;
+import java.net.Socket;
 import java.nio.channels.SocketChannel;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,6 +37,7 @@ public class ServerReader {
     private String[] commandString;
     private String mode;
     private Object[] objects;
+    private Socket socket;
 
     public ServerReader(String[] commandString) {
         this.command = commands.get(commandString[0]);
@@ -45,30 +45,27 @@ public class ServerReader {
 
     public ServerReader() {}
 
-    public boolean read(SelectionKey key) {
-        ByteBuffer buffer = ByteBuffer.allocate(100000);
+    public boolean read(Socket socket) {
         SocketChannel socketChannel = null;
         try {
-            socketChannel = (SocketChannel) key.channel();
-            socketChannel.read(buffer);
-            DataToServer dataToServer = SerializationUtils.deserialize(buffer.array());
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+            DataToServer dataToServer = (DataToServer) in.readObject();
 
             command = commands.get(dataToServer.getCommandString()[0]);
             commandString = dataToServer.getCommandString();
             mode = dataToServer.getMode();
             objects = dataToServer.getObjects();
+            this.socket = socket;
 
-            System.out.println(this);
-            socketChannel.configureBlocking(false);
-            socketChannel.register(key.selector(), SelectionKey.OP_WRITE);
+            System.out.println(Thread.currentThread().getName()+ " - " + this);
 
             return true;
         } catch (IOException e) {
             try {
                 socketChannel.close();
-            } catch (NullPointerException | IOException u) {u.printStackTrace();}
-            return false;
-        }
+            } catch (NullPointerException | IOException ignored) {}
+        } catch (ClassNotFoundException e) {e.printStackTrace();}
+        return false;
     }
 
     public Command getCommand() {
@@ -92,6 +89,10 @@ public class ServerReader {
 
     public Object[] getObjects() {
         return objects;
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 
     @Override
