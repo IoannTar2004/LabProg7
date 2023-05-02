@@ -46,7 +46,7 @@ public class ProgramStart {
 
             System.out.println(OutputText.startInformation("ProgramReady"));
             processing.commandScan(connection);
-            connection.getSocketChannel().close();
+            connection.getSocket().close();
 
         } catch (Exception e) {e.printStackTrace();}
     }

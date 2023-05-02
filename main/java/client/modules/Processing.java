@@ -3,8 +3,8 @@ package client.modules;
 import org.example.tools.OutputText;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.channels.SocketChannel;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -48,8 +48,8 @@ public class Processing {
                     } catch (IOException e) {
                         System.out.println(OutputText.serverError("ConnectionStop"));
                         connection.waitingForConnection();
-                    } catch (Exception ignored) {
-                    }
+                    } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ignored) {}
+                    //Некоторые команды отправляются без аргументов, и из-за этого вылетают эти исключения. Игнорирую.
                 }
             }
         } while (!input.equals("exit"));

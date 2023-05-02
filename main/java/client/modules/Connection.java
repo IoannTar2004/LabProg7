@@ -6,7 +6,11 @@ import org.example.transmission.DataToClient;
 import org.example.transmission.DataToServer;
 
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.nio.channels.UnresolvedAddressException;
@@ -14,7 +18,7 @@ import java.nio.channels.UnresolvedAddressException;
 public class Connection {
     private String host;
     private int port;
-    private SocketChannel socketChannel;
+    private Socket socket;
 
     public String getHost() {
         return host;
@@ -23,9 +27,10 @@ public class Connection {
     public int getPort() {
         return port;
     }
+    public SocketChannel getSocketChannel() {return null;}
 
-    public SocketChannel getSocketChannel() {
-        return socketChannel;
+    public Socket getSocket() {
+        return socket;
     }
 
     public Connection(String host, int port) {
@@ -67,28 +72,31 @@ public class Connection {
      * @return open and return socket channel
      * @throws UnresolvedAddressException when host is unknown
      */
-    public SocketChannel waitingForConnection() throws UnresolvedAddressException {
+    public void waitingForConnection() throws UnresolvedAddressException {
         while (true) {
             try {
-                socketChannel = SocketChannel.open(new InetSocketAddress(host, port));;
-                return socketChannel;
+                socket = new Socket(host, port);
+                return;
             } catch (IOException ignored) {}
         }
     }
 
     public Object[] exchange(String[] input, String mode, Object[] objects) throws IOException{
-        ByteBuffer buffer = ByteBuffer.allocate(100000);
         DataToServer sender = new DataToServer(input, mode, objects);
 
-        byte[] bytes = SerializationUtils.serialize(sender);
-        socketChannel.write(ByteBuffer.wrap(bytes));
-        socketChannel.read(buffer);
-        DataToClient result = SerializationUtils.deserialize(buffer.array());
         try {
-            result.getResult().forEach(System.out::println);
-        } catch (Exception ignored) {}
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            out.writeObject(sender);
 
-        return result.getArguments();
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
+            DataToClient result = (DataToClient) in.readObject();
+            try {
+                result.getResult().forEach(System.out::println);
+            } catch (Exception ignored) {} //Пустой результат
+            return result.getArguments();
+
+        } catch (ClassNotFoundException e) {e.printStackTrace();}
+        return null;
     }
 }
