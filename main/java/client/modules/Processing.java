@@ -48,7 +48,8 @@ public class Processing {
                     } catch (IOException e) {
                         System.out.println(OutputText.serverError("ConnectionStop"));
                         connection.waitingForConnection();
-                    } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ignored) {}
+                    } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException
+                            | ArrayIndexOutOfBoundsException ignored) {}
                     //Некоторые команды отправляются без аргументов, и из-за этого вылетают эти исключения. Игнорирую.
                 }
             }
