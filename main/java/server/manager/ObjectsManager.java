@@ -3,6 +3,7 @@ package server.manager;
 import org.example.collections.Dragon;
 import org.example.collections.DragonFields;
 import org.example.tools.DragonOptions;
+import server.database.DataBaseStuds;
 import server.tools.IdGenerator;
 import server.tools.Sort;
 
@@ -20,7 +21,7 @@ public class ObjectsManager extends CollectionManager {
             }
         }
         dragon.setId(IdGenerator.generate());
-        dragon.setCreationDate(new Date());
+        new DataBaseStuds().insert(dragon);
         dragons.add(dragon);
         dragons.sort(new Sort.SortBySize());
     }
