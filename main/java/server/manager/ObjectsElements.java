@@ -24,11 +24,11 @@ public class ObjectsElements extends CollectionManager {
             elements.put("2", "Имя: " + dragon.getName());
             elements.put("3", "координаты: " + dragon.getCoordinates());
             elements.put("4", "возраст: " + dragon.getAge());
-            elements.put("5", "дата создания: " + dragon.getCreationDate());
-            elements.put("6", "цвет: " + dragon.getColor());
-            elements.put("7", "тип: " + dragon.getType());
-            elements.put("8", "характер: " + dragon.getCharacter());
-            elements.put("9", "глубина пещеры: " + dragon.getCave());
+            elements.put("5", "цвет: " + dragon.getColor());
+            elements.put("6", "тип: " + dragon.getType());
+            elements.put("7", "характер: " + dragon.getCharacter());
+            elements.put("8", "глубина пещеры: " + dragon.getCave());
+            elements.put("9", "дата создания: " + dragon.getCreationDate());
 
             String show = "| ";
             boolean unknownNumber = false;
