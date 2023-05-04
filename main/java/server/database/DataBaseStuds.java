@@ -20,7 +20,7 @@ public class DataBaseStuds extends DataBaseInitialization {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO " +
                     "dragons VALUES (?,?,?,?,?,?,?,?,?,?)");
             statement.setLong(1, dragon.getId());
-            statement.setString(2, "ivan");
+            statement.setLong(2, 1);
             statement.setString(3, dragon.getName());
             statement.setString(4, dragon.getCoordinates());
             statement.setInt(5, dragon.getAge());

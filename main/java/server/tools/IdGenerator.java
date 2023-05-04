@@ -21,7 +21,7 @@ public class IdGenerator {
         DataBaseStuds studs = new DataBaseStuds();
         try {
             Statement statement = studs.getConnection().createStatement();
-            ResultSet set = statement.executeQuery("select nextval('nextid')");
+            ResultSet set = statement.executeQuery("select nextval('dragon_id')");
             set.next();
 
             return set.getLong(1);
