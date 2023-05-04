@@ -28,25 +28,15 @@ public class AddCommand implements Command {
      */
     @Override
     public ServerSender execute(String mode, String[] command, Object... args) {
-        if (Objects.equals(mode, "xml")) {
-            List<Dragon> list = new LinkedList<>((List<Dragon>) args[0]);
-            for (Dragon dragon : list) {
-                if (new ObjectsCollectionManager().getDragonById(dragon.getId()) == null) {
-                    new ObjectsManager().add(dragon);
-                }
-            }
-            FileManager.setCurrentFile((File) args[1]);
-            return new ServerSender(new Object[]{""});
-
-        } else if (Objects.equals(mode, "script")) {
+        if (Objects.equals(mode, "script")) {
             for (DragonFields fields: DragonFields.values()) {
                 args[fields.ordinal()] = new DragonOptions().dragonProcessing(fields, (String) args[fields.ordinal()]);
             }
-            new ObjectsManager().add(args);
+            new ObjectsManager().insert(args);
             return new ServerSender(List.of(OutputText.result("Added")));
 
         } else if (Objects.equals(mode, "collection")) {
-            new ObjectsManager().add((Dragon) args[0]);
+            new ObjectsManager().insert((Dragon) args[0]);
             return new ServerSender(List.of(OutputText.result("Added")));
 
         } else {

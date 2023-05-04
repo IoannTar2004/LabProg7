@@ -35,7 +35,7 @@ public class AddIfMaxCommand implements Command {
             }
             return new ServerSender(new Object[]{dragon});
         } else if (Objects.equals(mode, "server2")) {
-            new ObjectsManager().add(args);
+            new ObjectsManager().insert(args);
             return new ServerSender(List.of(OutputText.result("Added")));
         } else {
            return new ServerSender(new Object[]{"addIfMaxDragon"});

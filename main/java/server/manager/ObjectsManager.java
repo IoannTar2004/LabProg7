@@ -5,13 +5,10 @@ import org.example.collections.DragonFields;
 import org.example.tools.DragonOptions;
 import server.database.DataBaseStuds;
 import server.tools.IdGenerator;
-import server.tools.Sort;
-
-import java.util.Date;
 
 public class ObjectsManager extends CollectionManager {
 
-    public void add(Object... args) {
+    public void insert(Object... args) {
 
         Dragon dragon = new Dragon();
 
@@ -25,12 +22,14 @@ public class ObjectsManager extends CollectionManager {
         dragons.add(dragon);
     }
 
-    public void add(Dragon dragon) {
-        if (dragon != null) {
-            dragon.setId(IdGenerator.generate());
-            new DataBaseStuds().insert(dragon);
-            dragons.add(dragon);
-        }
+    public void insert(Dragon dragon) {
+        dragon.setId(IdGenerator.generate());
+        new DataBaseStuds().insert(dragon);
+        dragons.add(dragon);
+    }
+
+    public void addFromDataBase(Dragon dragon) {
+        dragons.add(dragon);
     }
 
     public int length() {

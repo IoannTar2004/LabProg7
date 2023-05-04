@@ -1,10 +1,7 @@
 package server.database;
 
-import org.example.collections.Coordinates;
-import org.example.collections.Dragon;
-import org.example.collections.DragonCave;
+import org.example.collections.*;
 import org.example.tools.Checks;
-import org.example.tools.DragonOptions;
 import server.manager.ObjectsManager;
 
 import java.sql.*;
@@ -44,11 +41,10 @@ public abstract class DataBaseInitialization {
         while (set.next()) {
             Dragon dragon = new Dragon(set.getLong(1), set.getString(2), set.getString(3),
                     new Checks(set.getString(4)).coordinatesChecker(), set.getInt(5),
-                    new Checks(set.getString(6)).colorChecker(), new Checks(set.getString(7)).typeChecker(),
-                    new Checks(set.getString(8)).characterChecker(), new DragonCave(set.getLong(9)));
+                    Color.getEnumColor(set.getString(6)), DragonType.getEnumType(set.getString(7)),
+                    DragonCharacter.getEnumCharacter(set.getString(8)), new DragonCave(set.getLong(9)));
             dragon.setCreationDate(set.getTimestamp(10));
-            System.out.println(dragon);
-            new ObjectsManager().add(dragon);
+            new ObjectsManager().addFromDataBase(dragon);
         }
     }
 }
