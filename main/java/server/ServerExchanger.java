@@ -1,5 +1,6 @@
 package server;
 
+import server.database.DataBaseInitialization;
 import server.multithreading.Consumer;
 import server.multithreading.Producer;
 
@@ -11,6 +12,8 @@ import java.util.concurrent.Executors;
 
 public class ServerExchanger {
     public static void main(String[] args) {
+        DataBaseInitialization.connect("jdbc:postgresql://localhost:2004/test",
+                "postgres", "SPbass1470O");
 
         try (ServerSocket serverSocket = new ServerSocket(30094)) {
             serverSocket.setReuseAddress(true);

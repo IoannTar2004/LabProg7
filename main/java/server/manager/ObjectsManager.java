@@ -28,6 +28,7 @@ public class ObjectsManager extends CollectionManager {
     public void add(Dragon dragon) {
         if (dragon != null) {
             dragon.setId(IdGenerator.generate());
+            new DataBaseStuds().insert(dragon);
             dragons.add(dragon);
         }
     }

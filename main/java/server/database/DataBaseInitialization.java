@@ -1,6 +1,11 @@
 package server.database;
 
+import org.example.collections.Coordinates;
 import org.example.collections.Dragon;
+import org.example.collections.DragonCave;
+import org.example.tools.Checks;
+import org.example.tools.DragonOptions;
+import server.manager.ObjectsManager;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -13,13 +18,6 @@ public abstract class DataBaseInitialization {
 
     public DataBaseInitialization(String url, String user, String password) {
         String key = url + "_" + user + "_" + password;
-        if (connections.get(key) == null) {
-            try {
-                Class.forName("org.postgresql.Driver");
-                Connection connection = DriverManager.getConnection(url, user, password);
-                connections.put(key, connection);
-            } catch (ClassNotFoundException | SQLException e) {e.printStackTrace();}
-        }
         this.connection = connections.get(key);
     }
 
@@ -44,10 +42,13 @@ public abstract class DataBaseInitialization {
         ResultSet set = statement.executeQuery("SELECT * FROM dragons");
 
         while (set.next()) {
-            Dragon dragon = new Dragon();
-            for (int i = 1; i < 10; i++) {
-                //dragon.;
-            }
+            Dragon dragon = new Dragon(set.getLong(1), set.getString(2), set.getString(3),
+                    new Checks(set.getString(4)).coordinatesChecker(), set.getInt(5),
+                    new Checks(set.getString(6)).colorChecker(), new Checks(set.getString(7)).typeChecker(),
+                    new Checks(set.getString(8)).characterChecker(), new DragonCave(set.getLong(9)));
+            dragon.setCreationDate(set.getTimestamp(10));
+            System.out.println(dragon);
+            new ObjectsManager().add(dragon);
         }
     }
 }
