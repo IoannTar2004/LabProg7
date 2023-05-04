@@ -1,10 +1,12 @@
 package server.database;
 
 import org.example.collections.Dragon;
+import server.manager.ObjectsCollectionManager;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DataBaseStuds extends DataBaseInitialization {
 
@@ -29,6 +31,15 @@ public class DataBaseStuds extends DataBaseInitialization {
             statement.setTimestamp(10, dragon.getCreationDate());
 
             statement.execute();
-        } catch (SQLException ignored) {ignored.printStackTrace();} //никогда не выбросится
+        } catch (SQLException e) {e.printStackTrace();}
+    }
+
+    public void removeFirst() {
+        try {
+            Dragon dragon = new ObjectsCollectionManager().getDragonByIndex(0);
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM dragons" +
+                    "WHERE id = ?");
+            statement.setLong(1, dragon.getId());
+        } catch (SQLException e) {e.printStackTrace();}
     }
 }

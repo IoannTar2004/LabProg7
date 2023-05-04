@@ -1,6 +1,7 @@
 package server.commands;
 
 import org.example.tools.OutputText;
+import server.database.DataBaseStuds;
 import server.manager.ObjectsManager;
 import server.modules.ServerSender;
 
@@ -17,6 +18,7 @@ public class RemoveFirstCommand implements Command {
     public ServerSender execute(String mode, String[] command, Object... args) {
         ObjectsManager objectsManager = new ObjectsManager();
         if (objectsManager.length() > 0) {
+            new DataBaseStuds().removeFirst();
             objectsManager.remove_first();
             return new ServerSender(List.of(OutputText.result("RemovedFirst")));
         }
