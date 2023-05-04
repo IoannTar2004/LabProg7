@@ -27,6 +27,7 @@ public class ObjectsManager extends CollectionManager {
 
     public void add(Dragon dragon) {
         if (dragon != null) {
+            dragon.setId(IdGenerator.generate());
             dragons.add(dragon);
         }
     }

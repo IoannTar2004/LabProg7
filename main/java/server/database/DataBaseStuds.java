@@ -29,7 +29,6 @@ public class DataBaseStuds extends DataBaseInitialization {
             statement.setString(8, dragon.getCharacter());
             statement.setDouble(9, dragon.getCave());
             statement.setTimestamp(10, dragon.getCreationDate());
-
             statement.execute();
         } catch (SQLException e) {e.printStackTrace();}
     }

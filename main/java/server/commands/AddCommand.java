@@ -46,7 +46,7 @@ public class AddCommand implements Command {
             return new ServerSender(List.of(OutputText.result("Added")));
 
         } else if (Objects.equals(mode, "collection")) {
-            new ObjectsManager().add(args);
+            new ObjectsManager().add((Dragon) args[0]);
             return new ServerSender(List.of(OutputText.result("Added")));
 
         } else {
