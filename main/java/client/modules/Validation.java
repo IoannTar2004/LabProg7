@@ -21,17 +21,19 @@ public class Validation {
      */
     public void addDragon(Connection connection, Object... data) throws IOException {
         Processing manager = new Processing();
-        Object[] args = new Object[7];
+        DragonOptions dragonOptions = new DragonOptions();
+        Dragon dragon = new Dragon();
         for (DragonFields fields: DragonFields.values()) {
             Object element;
             System.out.println(OutputText.input(fields.getField() + "Input"));
             do {
                 String input = manager.scanner();
-                element = new DragonOptions().dragonProcessing(fields, input);
+                element = dragonOptions.dragonProcessing(fields, input);
+                dragon = dragonOptions.dragonInput(dragon, fields, element);
             } while (element == null);
-            args[fields.ordinal()] = element;
         }
-        connection.exchange(new String[]{"add"}, "collection", args);
+        dragon.setUserId(1);
+        connection.exchange(new String[]{"add"}, "collection", new Object[]{dragon});
     }
 
     /**
