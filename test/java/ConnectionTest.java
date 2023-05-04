@@ -1,4 +1,4 @@
-import client.modules.Connection;
+import client.enter.Connection;
 import org.junit.jupiter.api.Test;
 
 class ConnectionTest {

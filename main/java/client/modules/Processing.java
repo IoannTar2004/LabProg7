@@ -1,5 +1,6 @@
 package client.modules;
 
+import client.enter.Connection;
 import org.example.tools.OutputText;
 
 import java.io.IOException;

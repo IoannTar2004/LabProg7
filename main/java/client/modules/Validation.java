@@ -1,5 +1,6 @@
 package client.modules;
 
+import client.enter.Connection;
 import client.readers.ScriptReader;
 import org.example.collections.Dragon;
 import org.example.collections.DragonFields;

@@ -1,6 +1,6 @@
 package client;
 
-import client.modules.ProgramStart;
+import client.enter.ProgramStart;
 import org.example.tools.InitializationDate;
 
 public class Main {

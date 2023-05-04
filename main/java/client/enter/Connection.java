@@ -1,5 +1,6 @@
-package client.modules;
+package client.enter;
 
+import client.modules.Processing;
 import org.apache.commons.lang3.SerializationUtils;
 import org.example.tools.OutputText;
 import org.example.transmission.DataToClient;
@@ -43,6 +44,7 @@ public class Connection {
      * Method processes input of server host and port
      * @return socketChannel
      */
+    @Deprecated
     public void connectionToServer() {
         Processing processing = new Processing();
         System.out.println(OutputText.startInformation("ServerInfo"));
@@ -75,7 +77,7 @@ public class Connection {
     public void waitingForConnection() throws UnresolvedAddressException {
         while (true) {
             try {
-                socket = new Socket(host, port);
+                socket = new Socket("localhost", 30094);
                 return;
             } catch (IOException ignored) {}
         }
