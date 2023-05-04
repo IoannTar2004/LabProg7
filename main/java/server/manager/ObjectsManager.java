@@ -23,7 +23,6 @@ public class ObjectsManager extends CollectionManager {
         dragon.setId(IdGenerator.generate());
         new DataBaseStuds().insert(dragon);
         dragons.add(dragon);
-        dragons.sort(new Sort.SortBySize());
     }
 
     public void add(Dragon dragon) {

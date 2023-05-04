@@ -99,19 +99,4 @@ public class Sort {
             return (int) (d1.getCave()-d2.getCave());
         }
     }
-
-    public static class SortBySize extends Sort implements Comparator<Dragon> {
-        @Override
-        public int compare(Dragon o1, Dragon o2) {
-            int sum1 = 0;
-            int sum2 = 0;
-            for (byte num: SerializationUtils.serialize(o1)) {
-                sum1 = sum1 + num;
-            }
-            for (byte num: SerializationUtils.serialize(o2)) {
-                sum2 = sum2 + num;
-            }
-            return sum1-sum2;
-        }
-    }
 }
