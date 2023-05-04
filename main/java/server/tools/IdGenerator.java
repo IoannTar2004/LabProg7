@@ -1,8 +1,13 @@
 package server.tools;
 
 import org.example.collections.Dragon;
+import server.database.DataBaseStuds;
 import server.manager.ObjectsCollectionManager;
 import server.manager.ObjectsManager;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * class for id generate
@@ -13,17 +18,14 @@ public class IdGenerator {
      * @return id
      */
     public static Long generate() {
-        ObjectsManager objectsManager = new ObjectsManager();
-        ObjectsCollectionManager getters = new ObjectsCollectionManager();
-        Long id = Long.parseLong(String.valueOf(Math.round((Math.random() * Math.pow(10, 11)) + 9*Math.pow(10, 11)-1)));
+        DataBaseStuds studs = new DataBaseStuds();
+        try {
+            Statement statement = studs.getConnection().createStatement();
+            ResultSet set = statement.executeQuery("select nextval('nextid')");
+            set.next();
 
-        for (int i = 0; i < objectsManager.length(); i++) {
-            Dragon dragon = getters.getDragonByIndex(i);
-            if (id == getters.getId(dragon)) {
-                id = generate();
-                i = 0;
-            }
-        }
-        return id;
+            return set.getLong(1);
+        } catch (SQLException e) {e.printStackTrace();}
+        return null;
     }
 }
