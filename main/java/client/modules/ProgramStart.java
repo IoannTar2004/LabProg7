@@ -8,6 +8,7 @@ import org.example.tools.OutputText;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public class ProgramStart {
@@ -16,38 +17,15 @@ public class ProgramStart {
      */
     public static void start() {
         Connection connection = new Connection();
-        Validation validation = new Validation();
         Processing processing = new Processing();
 
         connection.connectionToServer();
 
+        System.out.println(OutputText.startInformation("ProgramReady"));
+        processing.commandScan(connection);
         try {
-            System.out.println(OutputText.startInformation("CorrectXmlFile"));
-            String data;
-            if (validation.yesNoInput()) {
-                System.out.println(OutputText.startInformation("Example"));
-            }
-
-            System.out.println(OutputText.startInformation("EnvVar"));
-            File file = null;
-            do {
-                data = processing.scanner();
-                try {
-                    file = new Checks(data).fileChecker();
-                } catch (FileNotFoundException e) {
-                    System.out.println(OutputText.error("FileNotFound"));
-                }
-                if (file != null) {
-                    List<Dragon> list = XMLReader.parse(file);
-                    FileManager.setCurrentFile(file);
-                    connection.exchange(new String[]{"add"}, "xml", new Object[]{list, file});
-                }
-            } while (file == null);
-
-            System.out.println(OutputText.startInformation("ProgramReady"));
-            processing.commandScan(connection);
             connection.getSocket().close();
+        } catch (IOException e) {e.printStackTrace();}
 
-        } catch (Exception e) {e.printStackTrace();}
     }
 }

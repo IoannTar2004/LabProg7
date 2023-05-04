@@ -32,7 +32,7 @@ public class Validation {
                 dragon = dragonOptions.dragonInput(dragon, fields, element);
             } while (element == null);
         }
-        dragon.setUserId(1);
+        dragon.setUserLogin("ivan");
         connection.exchange(new String[]{"add"}, "collection", new Object[]{dragon});
     }
 
