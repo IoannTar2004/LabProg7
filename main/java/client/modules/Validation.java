@@ -40,7 +40,6 @@ public class Validation {
     public void updateDragon(Connection connection, Object... data) throws IOException {
         Processing manager = new Processing();
         Object[] args = new Object[7];
-        nextField:
         for (DragonFields fields: DragonFields.values()) {
             args[fields.ordinal()] = null;
             System.out.println(OutputText.input(fields.getField() + "NewInput"));
