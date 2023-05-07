@@ -17,7 +17,7 @@ public class DataBaseStuds extends DataBaseInitialization {
 
     public void insert(Dragon dragon) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO " +
+            PreparedStatement statement = getConnection().prepareStatement("INSERT INTO " +
                     "dragons VALUES (?,?,?,?,?,?,?,?,?,?)");
             statement.setLong(1, dragon.getId());
             statement.setString(2, "ivan");
@@ -36,7 +36,7 @@ public class DataBaseStuds extends DataBaseInitialization {
     public void removeFirst() {
         try {
             Dragon dragon = new ObjectsCollectionManager().getDragonByIndex(0);
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM dragons" +
+            PreparedStatement statement = getConnection().prepareStatement("DELETE FROM dragons" +
                     "WHERE id = ?");
             statement.setLong(1, dragon.getId());
         } catch (SQLException e) {e.printStackTrace();}

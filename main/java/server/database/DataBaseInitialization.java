@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class DataBaseInitialization {
-    Connection connection;
+    private Connection connection;
 
     private static Map<String, Connection> connections = new HashMap<>();
 
