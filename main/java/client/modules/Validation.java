@@ -34,7 +34,7 @@ public class Validation {
             } while (element == null);
         }
         dragon.setUserLogin("ivan");
-        connection.exchange(new String[]{"add"}, "collection", new Object[]{dragon});
+        connection.<Dragon, String>exchange(new String[]{"add"}, "collection", dragon);
     }
 
     /**

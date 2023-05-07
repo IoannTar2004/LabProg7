@@ -79,8 +79,8 @@ public class Connection {
         }
     }
 
-    public Object[] exchange(String[] input, String mode, Object[] objects) throws IOException{
-        DataToServer sender = new DataToServer(input, mode, objects);
+    public <S,G> G[] exchange(String[] input, String mode, S... objects) throws IOException{
+        DataToServer<S> sender = new DataToServer<>(input, mode, objects);
 
         try {
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -88,7 +88,7 @@ public class Connection {
 
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
-            DataToClient result = (DataToClient) in.readObject();
+            DataToClient<G> result = (DataToClient) in.readObject();
             try {
                 result.getResult().forEach(System.out::println);
             } catch (Exception ignored) {} //Пустой результат

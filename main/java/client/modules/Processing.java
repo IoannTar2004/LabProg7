@@ -40,7 +40,7 @@ public class Processing {
                     new Validation().scriptParse(connection, input.split("\\s+"));
                 } else {
                     try {
-                        Object[] arguments = connection.exchange(input.split("\\s+"), "user",
+                        Object[] arguments = connection.<String, String>exchange(input.split("\\s+"), "user",
                                 null);
 
                         Class<Validation> valid = Validation.class;
@@ -49,8 +49,7 @@ public class Processing {
                     } catch (IOException e) {
                         System.out.println(OutputText.serverError("ConnectionStop"));
                         connection.waitingForConnection();
-                    } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException
-                            | ArrayIndexOutOfBoundsException ignored) {}
+                    } catch (Exception ignored) {}
                     //Некоторые команды отправляются без аргументов, и из-за этого вылетают эти исключения. Игнорирую.
                 }
             }
