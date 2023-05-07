@@ -40,16 +40,12 @@ public class Processing {
                     new Validation().scriptParse(connection, input.split("\\s+"));
                 } else {
                     try {
-                        Object[] arguments = connection.<String, String>exchange(input.split("\\s+"), "user",
-                                null);
+                        Object[] arguments = connection.<String, String>exchange(input.split("\\s+"), "user");
 
                         Class<Validation> valid = Validation.class;
                         Method method = valid.getDeclaredMethod((String) arguments[0], Connection.class, Object[].class);
                         method.invoke(new Validation(), connection, arguments);
-                    } catch (IOException e) {
-                        System.out.println(OutputText.serverError("ConnectionStop"));
-                        connection.waitingForConnection();
-                    } catch (Exception ignored) {}
+                    }  catch (Exception ignored) {}
                     //Некоторые команды отправляются без аргументов, и из-за этого вылетают эти исключения. Игнорирую.
                 }
             }

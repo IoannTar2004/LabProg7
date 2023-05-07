@@ -1,18 +1,28 @@
 package client.enter;
 
 import client.modules.Processing;
+import org.example.tools.OutputText;
 
+import java.io.IOException;
 import java.io.Serializable;
 
-public class Registration implements Serializable {
+public class Registration {
     private String login;
     private String password;
 
     public void register(boolean register, Connection connection) {
-        this.setLogin();
-        this.setPassword();
-        if (register) {
-            String reply = connection.exchange()
+        while(true) {
+            this.setLogin();
+            this.setPassword();
+            if (register) {
+                if (connection.<String, Boolean>exchange(new String[]{"user_access"}, "existedUser", this.login, this.password)[0]) {
+                    return;
+                }
+            } else {
+                if (connection.<String, Boolean>exchange(new String[]{"user_access"}, "newUser", this.login, this.password)[0]) {
+                    return;
+                }
+            }
         }
     }
 

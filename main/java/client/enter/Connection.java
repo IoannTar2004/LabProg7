@@ -79,7 +79,7 @@ public class Connection {
         }
     }
 
-    public <S,G> G[] exchange(String[] input, String mode, S... objects) throws IOException{
+    public <S,G> G[] exchange(String[] input, String mode, S... objects) {
         DataToServer<S> sender = new DataToServer<>(input, mode, objects);
 
         try {
@@ -87,14 +87,18 @@ public class Connection {
             out.writeObject(sender);
 
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-
             DataToClient<G> result = (DataToClient) in.readObject();
             try {
                 result.getResult().forEach(System.out::println);
             } catch (Exception ignored) {} //Пустой результат
             return result.getArguments();
 
-        } catch (ClassNotFoundException e) {e.printStackTrace();}
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+              System.out.println(OutputText.serverError("ConnectionStop"));
+              waitingForConnection();
+        }
         return null;
     }
 }
