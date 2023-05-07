@@ -3,6 +3,7 @@ package server.modules;
 import org.example.transmission.DataToServer;
 import server.commands.*;
 import server.commands.Command;
+import server.database.UserAccess;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -25,6 +26,7 @@ public class ServerReader {
         commands.put("remove_first", new RemoveFirstCommand());
         commands.put("exit", new ExitCommand());
         commands.put("show", new ShowCommand());
+        commands.put("user_access", new UserAccess());
 
         commands.put("count_greater_than_age", new CountGreaterCommand());
         commands.put("execute_script", new ExecuteScriptCommand());

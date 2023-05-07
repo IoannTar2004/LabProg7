@@ -21,7 +21,7 @@ public class ServerSender<T> implements Runnable {
         this.arguments = arguments;
     }
 
-    public ServerSender(List<String> result, T[] arguments) {
+    public ServerSender(List<String> result, T... arguments) {
         this.result = result;
         this.arguments = arguments;
     }
