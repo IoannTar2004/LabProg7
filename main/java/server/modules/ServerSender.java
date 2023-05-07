@@ -4,25 +4,24 @@ import org.example.transmission.DataToClient;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.List;
 
-public class ServerSender implements Runnable {
+public class ServerSender<T> implements Runnable {
     private List<String> result;
-    private Object[] arguments = {};
+    private T[] arguments;
     private Socket socket;
 
     public ServerSender(List<String> result) {
         this.result = result;
     }
 
-    public ServerSender(Object[] arguments) {
+    public ServerSender(T[] arguments) {
         this.arguments = arguments;
     }
 
-    public ServerSender(List<String> result, Object[] arguments) {
+    public ServerSender(List<String> result, T[] arguments) {
         this.result = result;
         this.arguments = arguments;
     }
@@ -38,7 +37,7 @@ public class ServerSender implements Runnable {
     @Override
     public void run() {
         try {
-            DataToClient dataToClient = new DataToClient(result, arguments);
+            DataToClient<T> dataToClient = new DataToClient<>(result, arguments);
             ObjectOutputStream stream = new ObjectOutputStream(socket.getOutputStream());
             stream.writeObject(dataToClient);
 

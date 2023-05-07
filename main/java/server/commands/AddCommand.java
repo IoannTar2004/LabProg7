@@ -27,20 +27,20 @@ public class AddCommand implements Command {
      * @param args
      */
     @Override
-    public ServerSender execute(String mode, String[] command, Object... args) {
+    public ServerSender<String> execute(String mode, String[] command, Object... args) {
         if (Objects.equals(mode, "script")) {
             for (DragonFields fields: DragonFields.values()) {
                 args[fields.ordinal()] = new DragonOptions().dragonProcessing(fields, (String) args[fields.ordinal()]);
             }
             new ObjectsManager().insert(args);
-            return new ServerSender(List.of(OutputText.result("Added")));
+            return new ServerSender<>(List.of(OutputText.result("Added")));
 
         } else if (Objects.equals(mode, "collection")) {
             new ObjectsManager().insert((Dragon) args[0]);
-            return new ServerSender(List.of(OutputText.result("Added")));
+            return new ServerSender<>(List.of(OutputText.result("Added")));
 
         } else {
-            return new ServerSender(new Object[]{"addDragon"});
+            return new ServerSender<>(new String[]{"addDragon"});
         }
     }
 }
