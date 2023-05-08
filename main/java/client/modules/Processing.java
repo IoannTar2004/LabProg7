@@ -1,10 +1,8 @@
 package client.modules;
 
 import client.enter.Connection;
-import org.example.tools.OutputText;
+import client.enter.Registration;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -31,7 +29,7 @@ public class Processing {
     /**
      * Method reads commands entered by user.
      */
-    public void commandScan(Connection connection) {
+    public void commandScan(Connection connection, Registration registration) {
         String input;
         do {
             input = scanner();
@@ -40,11 +38,12 @@ public class Processing {
                     new Validation().scriptParse(connection, input.split("\\s+"));
                 } else {
                     try {
-                        Object[] arguments = connection.<String, String>exchange(input.split("\\s+"), "user");
+                        Object[] arguments = connection.<String, String>exchange(input.split("\\s+"), "user",
+                                registration.getLogin());
 
                         Class<Validation> valid = Validation.class;
-                        Method method = valid.getDeclaredMethod((String) arguments[0], Connection.class, Object[].class);
-                        method.invoke(new Validation(), connection, arguments);
+                        Method method = valid.getDeclaredMethod((String) arguments[0], Connection.class, Registration.class,Object[].class);
+                        method.invoke(new Validation(), connection, registration, arguments);
                     }  catch (Exception ignored) {}
                     //Некоторые команды отправляются без аргументов, и из-за этого вылетают эти исключения. Игнорирую.
                 }

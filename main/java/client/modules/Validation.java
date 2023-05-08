@@ -1,6 +1,7 @@
 package client.modules;
 
 import client.enter.Connection;
+import client.enter.Registration;
 import client.readers.ScriptReader;
 import org.example.collections.Dragon;
 import org.example.collections.DragonFields;
@@ -20,7 +21,7 @@ public class Validation {
     /**
      * Triggers when user enters command "add" to terminal
      */
-    public void addDragon(Connection connection, Object... data) throws IOException {
+    public void addDragon(Connection connection, Registration registration, Object... data) throws IOException {
         Processing manager = new Processing();
         DragonOptions dragonOptions = new DragonOptions();
         Dragon dragon = new Dragon();
@@ -33,7 +34,7 @@ public class Validation {
                 dragon = dragonOptions.dragonInput(dragon, fields, element);
             } while (element == null);
         }
-        dragon.setUserLogin("ivan");
+        dragon.setUserLogin(registration.getLogin());
         connection.<Dragon, String>exchange(new String[]{"add"}, "collection", dragon);
     }
 
