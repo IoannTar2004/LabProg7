@@ -38,7 +38,18 @@ public class ObjectsManager extends CollectionManager {
     public void remove(Dragon dragon) {
         dragons.remove(dragon);
     }
-    public void clear() {dragons.clear();}
+
+    public void clear(String login) {
+        int i = 0;
+        while (i < dragons.size()) {
+            if (login.equals(dragons.get(i).getUserLogin())) {
+                dragons.remove(i);
+                continue;
+            }
+            i++;
+        }
+    }
+
     public void remove_first() {dragons.remove(0);}
 
     public Dragon replace(Long id, Object... args) {
