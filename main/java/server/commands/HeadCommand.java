@@ -19,12 +19,11 @@ public class HeadCommand implements Command {
     @Override
     public ServerSender execute(String mode, String[] command, Object... args) {
         ObjectsManager objectsManager = new ObjectsManager();
-        ObjectsCollectionManager getters = new ObjectsCollectionManager();
         String login = (String) args[0];
-        if (objectsManager.fullLength() > 0) {
+        if (objectsManager.ownerLength(login) > 0) {
             Dragon dragon = new ObjectsCollectionManager().getAll().stream().
                     filter(dragon1 -> dragon1.getUserLogin().equals(login)).findFirst().orElse(null);
-            return new ServerSender(List.of(getters.getDragonByIndex(0).toString()));
+            return new ServerSender(List.of(dragon.toString()));
         } else {
             return new ServerSender(List.of(OutputText.result("Empty")));
         }
