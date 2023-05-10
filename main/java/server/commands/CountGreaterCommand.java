@@ -19,24 +19,17 @@ public class CountGreaterCommand implements Command {
     @Override
     public ServerSender execute(String mode, String[] command, Object... args) {
         try {
-            ObjectsManager objectsManager = new ObjectsManager();
-            ObjectsCollectionManager getters = new ObjectsCollectionManager();
             Checks checks = new Checks(command[1]);
             Integer age1 = checks.ageChecker();
-
             if (age1 != null) {
-                int count = 0;
-                for (int i = 0; i < objectsManager.fullLength(); i++) {
-                    Dragon dragon = getters.getDragonByIndex(i);
-                    if (getters.getAge(dragon) > age1) {
-                        count++;
-                    }
-                }
+                long count = new ObjectsCollectionManager().getAll().stream().
+                        filter(dragon1 -> dragon1.getUserLogin().equals(args[0]) && dragon1.getAge() > age1).count();
                 return new ServerSender(List.of(String.valueOf(count)));
+            } else {
+                return new ServerSender(List.of("Возраст - целое положительное число"));
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return new ServerSender(List.of(OutputText.error("NoAgeArgument")));
         }
-        return null;
     }
 }
