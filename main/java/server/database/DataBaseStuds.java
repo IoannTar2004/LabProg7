@@ -2,6 +2,7 @@ package server.database;
 
 import org.example.collections.Dragon;
 import server.manager.ObjectsCollectionManager;
+import server.manager.ObjectsManager;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -38,9 +39,11 @@ public class DataBaseStuds extends DataBaseInitialization {
         try {
             Dragon dragon = new ObjectsCollectionManager().getAll().stream().
                     filter(dragon1 -> dragon1.getUserLogin().equals(login)).findFirst().orElse(null);
-            PreparedStatement statement = getConnection().prepareStatement("DELETE FROM dragons" +
+            PreparedStatement statement = getConnection().prepareStatement("DELETE FROM dragons " +
                     "WHERE id = ?");
             statement.setLong(1, dragon.getId());
+            statement.execute();
+            new ObjectsManager().remove(dragon);
         } catch (SQLException e) {e.printStackTrace();}
     }
 }
