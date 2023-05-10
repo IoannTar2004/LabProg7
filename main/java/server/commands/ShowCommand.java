@@ -8,9 +8,6 @@ import server.manager.ObjectsElements;
 import server.manager.ObjectsManager;
 import server.modules.ServerSender;
 
-import java.sql.Driver;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
