@@ -50,7 +50,11 @@ public class ObjectsManager extends CollectionManager {
         }
     }
 
-    public void remove_first() {dragons.remove(0);}
+    public void remove_first(String login) {
+        while (true) {
+            if ()
+        }
+    }
 
     public Dragon replace(Long id, Object... args) {
         Dragon dragon = new ObjectsCollectionManager().getDragonById(id);

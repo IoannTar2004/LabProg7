@@ -7,11 +7,12 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Optional;
 
 public class DataBaseStuds extends DataBaseInitialization {
 
     public DataBaseStuds() {
-        super("jdbc:postgresql://localhost:2004/test",
+        super("jdbc:postgresql://localhost:2004/postgres",
                 "postgres", "SPbass1470O");
     }
 
@@ -33,9 +34,10 @@ public class DataBaseStuds extends DataBaseInitialization {
         } catch (SQLException e) {e.printStackTrace();}
     }
 
-    public void removeFirst() {
+    public void removeFirst(String login) throws NullPointerException {
         try {
-            Dragon dragon = new ObjectsCollectionManager().getDragonByIndex(0);
+            Dragon dragon = new ObjectsCollectionManager().getAll().stream().
+                    filter(dragon1 -> dragon1.getUserLogin().equals(login)).findFirst().orElse(null);
             PreparedStatement statement = getConnection().prepareStatement("DELETE FROM dragons" +
                     "WHERE id = ?");
             statement.setLong(1, dragon.getId());

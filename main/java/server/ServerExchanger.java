@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 
 public class ServerExchanger {
     public static void main(String[] args) {
-        DataBaseInitialization.connect("jdbc:postgresql://localhost:2004/test",
+        DataBaseInitialization.connect("jdbc:postgresql://localhost:2004/postgres",
                 "postgres", "SPbass1470O");
 
         try (ServerSocket serverSocket = new ServerSocket(30094)) {

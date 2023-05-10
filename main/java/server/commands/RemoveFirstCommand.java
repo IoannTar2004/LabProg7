@@ -17,12 +17,11 @@ public class RemoveFirstCommand implements Command {
     @Override
     public ServerSender execute(String mode, String[] command, Object... args) {
         ObjectsManager objectsManager = new ObjectsManager();
-        if (objectsManager.length() > 0) {
-            new DataBaseStuds().removeFirst();
-            objectsManager.remove_first();
+        try {
+            new DataBaseStuds().removeFirst((String) args[0]);
+            //objectsManager.remove_first();
             return new ServerSender(List.of(OutputText.result("RemovedFirst")));
-        }
-        else {
+        } catch (NullPointerException e) {
             return new ServerSender(List.of(OutputText.result("Empty")));
         }
     }
