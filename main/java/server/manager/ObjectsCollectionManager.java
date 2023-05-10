@@ -2,6 +2,7 @@ package server.manager;
 
 import org.example.collections.Dragon;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ObjectsCollectionManager extends CollectionManager {
@@ -16,6 +17,10 @@ public class ObjectsCollectionManager extends CollectionManager {
 
     public Dragon getDragonByIndex(int index) {return (Dragon) dragons.toArray()[index];}
     public List<Dragon> getAll() {return dragons;}
+
+    public List<Dragon> ownerList(String login) {
+        return new LinkedList<>(getAll()).stream().filter(dragon -> dragon.getUserLogin().equals(login)).toList();
+    }
 
     public String getName(Dragon dragon) {
         return dragon.getName();

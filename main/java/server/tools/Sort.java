@@ -17,11 +17,11 @@ public class Sort {
      * Sort elements in collection using nested classes which implement Comparator interface and print them.
      * @param fieldNum number of {@link Dragon} field (1 - name, 2 - coordinates, 3 - age, etc).
      */
-    public static List<String> sort(DragonFields fieldNum, String... args) {
+    public static List<String> sort(DragonFields fieldNum, String login, String... args) {
         ObjectsCollectionManager getters = new ObjectsCollectionManager();
         List<String> dragonList = new LinkedList<>();
 
-        List<Dragon> sortlist = new ArrayList<>(getters.getAll());
+        List<Dragon> sortlist = new ArrayList<>(getters.ownerList(login));
         switch (fieldNum) {
             case NAME -> sortlist.sort(new SortByName());
             case COORDINATES -> sortlist.sort(new SortByCoordinates());
