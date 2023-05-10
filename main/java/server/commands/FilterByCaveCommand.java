@@ -10,6 +10,8 @@ import server.modules.ServerSender;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Prints objects if they have a same cave depth
@@ -20,29 +22,22 @@ public class FilterByCaveCommand implements Command {
      */
     @Override
     public ServerSender execute(String mode, String[] command, Object... args) {
-        boolean check = false;
-        List<String> dragonsList = new LinkedList<>();
         try {
             Checks checks = new Checks(command[1]);
             DragonCave cave1 = checks.caveChecker();
-            ObjectsManager objectsManager = new ObjectsManager();
-            ObjectsCollectionManager getters = new ObjectsCollectionManager();
 
             if (cave1 != null) {
-                for (int i = 0; i < objectsManager.fullLength(); i++) {
-                    Dragon dragon = getters.getDragonByIndex(i);
-                    if (getters.getCave(dragon) == cave1.getDepth()) {
-                        dragonsList.add(dragon.toString());
-                        check = true;
-                    }
-                }
-                if (!check) {
+                List<String> filteredList = new ObjectsCollectionManager().getAll().stream().filter(dragon ->
+                        Objects.equals(dragon.getCave(), cave1.getDepth()) && dragon.getUserLogin().equals(args[0])).
+                map(Dragon::toString).toList();
+                if (filteredList.size() == 0) {
                     return new ServerSender(List.of(OutputText.error("ObjectsNotFound"))) ;
                 }
+                return new ServerSender(filteredList);
             }
+            return new ServerSender(List.of("Глубина пещеры - дробное число через точку"));
         } catch (ArrayIndexOutOfBoundsException e) {
             return new ServerSender(List.of(OutputText.error("NoCaveArgument"))) ;
         }
-        return new ServerSender(dragonsList);
     }
 }
