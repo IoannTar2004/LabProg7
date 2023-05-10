@@ -46,4 +46,14 @@ public class DataBaseStuds extends DataBaseInitialization {
             new ObjectsManager().remove(dragon);
         } catch (SQLException e) {e.printStackTrace();}
     }
+
+    public void removeById(String login, long id) {
+        try {
+            PreparedStatement statement = getConnection().prepareStatement("DELETE FROM dragons " +
+                    "WHERE id = ? and user_login = ?");
+            statement.setLong(1, id);
+            statement.setString(2, login);
+            statement.execute();
+        } catch (SQLException e) {e.printStackTrace();}
+    }
 }

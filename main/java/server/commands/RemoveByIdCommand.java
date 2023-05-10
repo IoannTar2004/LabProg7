@@ -3,6 +3,7 @@ package server.commands;
 import org.example.collections.Dragon;
 import org.example.tools.IdChecker;
 import org.example.tools.OutputText;
+import server.database.DataBaseStuds;
 import server.manager.ObjectsCollectionManager;
 import server.manager.ObjectsManager;
 import server.modules.ServerSender;
@@ -21,16 +22,20 @@ public class RemoveByIdCommand implements Command {
     public ServerSender execute(String mode, String[] command, Object... args) {
         try {
             ObjectsManager objectsManager = new ObjectsManager();
-            String output = IdChecker.check(new ObjectsCollectionManager().getAll(), command[1]);
-            if (Objects.equals(output, "Existed")) {
-                Dragon dragon = new ObjectsCollectionManager().getDragonById(Long.parseLong(command[1]));
-                objectsManager.remove(dragon);
-                return new ServerSender(List.of(OutputText.result("Removed")));
-            } else {
-                return new ServerSender(List.of(output));
-            }
+            DataBaseStuds studs = new DataBaseStuds();
+            long id = Long.parseLong(command[1]);
+
+            Dragon dragon = new ObjectsCollectionManager().getDragonById((String) args[0],id);
+            studs.removeById((String) args[0], id);
+            objectsManager.remove(dragon);
+            return new ServerSender(List.of(OutputText.result("Removed")));
+
         } catch (ArrayIndexOutOfBoundsException e) {
             return new ServerSender(List.of(OutputText.error("NoIdArgument")));
+        } catch (NumberFormatException e) {
+            return new ServerSender(List.of("id - целое положительное число!"));
+        } catch (NullPointerException e) {
+            return new ServerSender(List.of("Объекта с таким id в вашей коллекции не существует"));
         }
     }
 }

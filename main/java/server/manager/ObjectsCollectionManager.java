@@ -5,14 +5,13 @@ import org.example.collections.Dragon;
 import java.util.List;
 
 public class ObjectsCollectionManager extends CollectionManager {
-    public Dragon getDragonById(Long id) {
-        for (int i = 0; i < dragons.size(); i++) {
-            Dragon dragon = (Dragon) dragons.toArray()[i];
-            if (id == dragon.getId()) {
-                return dragon;
-            }
+    public Dragon getDragonById(String login, Long id) throws NullPointerException {
+        Dragon dragon = dragons.stream().filter(dragon1 -> dragon1.getId() == id && dragon1.getUserLogin().equals(login))
+                .findFirst().orElse(null);
+        if (dragon != null) {
+            return dragon;
         }
-        return null;
+        throw new NullPointerException();
     }
 
     public Dragon getDragonByIndex(int index) {return (Dragon) dragons.toArray()[index];}

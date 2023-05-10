@@ -55,7 +55,7 @@ public class ObjectsManager extends CollectionManager {
     }
 
     public Dragon replace(Long id, Object... args) {
-        Dragon dragon = new ObjectsCollectionManager().getDragonById(id);
+        Dragon dragon = null;// = new ObjectsCollectionManager().getDragonById(id);
         for(DragonFields fields: DragonFields.values()) {
             if (args[fields.ordinal()] != null) {
                 dragon = new DragonOptions().dragonInput(dragon, fields, args[fields.ordinal()]);
