@@ -32,9 +32,13 @@ public class ObjectsManager extends CollectionManager {
         dragons.add(dragon);
     }
 
-    public int fullLength() {
+    public long fullLength() {
         return dragons.size();
     }
+    public long ownerLength(String login) {
+        return new ObjectsCollectionManager().getAll().stream().filter(dragon1 -> dragon1.getUserLogin().equals(login)).count();
+    }
+
     public void remove(Dragon dragon) {
         dragons.remove(dragon);
     }
