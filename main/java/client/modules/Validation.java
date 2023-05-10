@@ -21,7 +21,7 @@ public class Validation {
     /**
      * Triggers when user enters command "add" to terminal
      */
-    public void addDragon(Connection connection, Registration registration, Object... data) throws IOException {
+    public void addDragon(Connection connection, Registration registration, Object... data) {
         Processing manager = new Processing();
         DragonOptions dragonOptions = new DragonOptions();
         Dragon dragon = new Dragon();
@@ -97,7 +97,7 @@ public class Validation {
     /**
      * Triggers when user enters command "print_descending" to terminal
      */
-    public void fieldSelection(Connection connection, Object... data) throws IOException {
+    public void fieldSelection(Connection connection, Registration registration, Object... data) throws IOException {
         DragonFields fieldNum;
         Processing manager = new Processing();
 
@@ -106,7 +106,8 @@ public class Validation {
             String input = manager.scanner();
             fieldNum = DragonFields.getFieldByNumber(input);
         } while (fieldNum == null);
-        connection.exchange(new String[]{"print_descending"},"collection", new Object[]{fieldNum});
+        connection.exchange(new String[]{"print_descending"},"collection",
+                registration.getLogin(), fieldNum);
     }
 
     /**
