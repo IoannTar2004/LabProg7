@@ -26,7 +26,7 @@ public class CountGreaterCommand implements Command {
 
             if (age1 != null) {
                 int count = 0;
-                for (int i = 0; i < objectsManager.length(); i++) {
+                for (int i = 0; i < objectsManager.fullLength(); i++) {
                     Dragon dragon = getters.getDragonByIndex(i);
                     if (getters.getAge(dragon) > age1) {
                         count++;

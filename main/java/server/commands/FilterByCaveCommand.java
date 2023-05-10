@@ -29,7 +29,7 @@ public class FilterByCaveCommand implements Command {
             ObjectsCollectionManager getters = new ObjectsCollectionManager();
 
             if (cave1 != null) {
-                for (int i = 0; i < objectsManager.length(); i++) {
+                for (int i = 0; i < objectsManager.fullLength(); i++) {
                     Dragon dragon = getters.getDragonByIndex(i);
                     if (getters.getCave(dragon) == cave1.getDepth()) {
                         dragonsList.add(dragon.toString());

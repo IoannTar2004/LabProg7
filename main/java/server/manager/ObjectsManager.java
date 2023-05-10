@@ -32,7 +32,7 @@ public class ObjectsManager extends CollectionManager {
         dragons.add(dragon);
     }
 
-    public int length() {
+    public int fullLength() {
         return dragons.size();
     }
     public void remove(Dragon dragon) {

@@ -15,7 +15,7 @@ public class XMLWriteParser {
         String data = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 
         data = data + "<root>\n";
-        for (int i = 0; i < objectsManager.length(); i++) {
+        for (int i = 0; i < objectsManager.fullLength(); i++) {
             Dragon dragon = getters.getDragonByIndex(i);
             data = data + "\t<object>\n";
 

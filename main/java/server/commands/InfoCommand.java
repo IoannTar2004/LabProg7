@@ -29,7 +29,7 @@ public class InfoCommand implements Command {
             set.next();
             return new ServerSender(List.of("Тип коллекции: ArrayDeque;",
                     "Дата инициализации: " + InitializationDate.getDate() + ";",
-                    "Всего драконов в базе: " + objectsManager.length() + ";",
+                    "Всего драконов в базе: " + objectsManager.fullLength() + ";",
                     "Ваших драконов: " + set.getInt(1) + ".\n"));
         } catch (SQLException e) {e.printStackTrace();}
         return null;

@@ -2,7 +2,6 @@ package server.commands;
 
 import org.example.collections.Dragon;
 import org.example.tools.OutputText;
-import server.database.DataBaseStuds;
 import server.manager.ObjectsCollectionManager;
 import server.manager.ObjectsElements;
 import server.manager.ObjectsManager;
@@ -28,8 +27,8 @@ public class ShowCommand implements Command {
         ObjectsCollectionManager getters = new ObjectsCollectionManager();
         List<Dragon> dragonList = new LinkedList<>(getters.getAll());
 
-        if (objectsManager.length() > 0) {
-            for (int i = 0; i < objectsManager.length(); i++) {
+        if (objectsManager.fullLength() > 0) {
+            for (int i = 0; i < objectsManager.fullLength(); i++) {
                 if (args[0].equals(dragonList.get(i).getUserLogin())) {
                     list.add(objectsElements.element(getters.getDragonByIndex(i), command));
                 }
