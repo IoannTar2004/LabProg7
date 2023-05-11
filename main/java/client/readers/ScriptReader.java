@@ -1,5 +1,6 @@
 package client.readers;
 
+import client.enter.Registration;
 import org.example.tools.Checks;
 import org.example.tools.FileManager;
 

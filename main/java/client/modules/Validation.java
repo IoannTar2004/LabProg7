@@ -37,7 +37,7 @@ public class Validation {
             } while (element == null);
         }
         dragon.setUserLogin(registration.getLogin());
-        connection.<Dragon, String>exchange(new String[]{"add"}, "collection", dragon);
+        connection.<Dragon, String>exchange(new String[]{"add"}, "collection", registration.getLogin(),dragon);
     }
 
     /**
@@ -61,13 +61,13 @@ public class Validation {
                 args[i] = new DragonOptions().dragonProcessing(fields, input);
             } while (args[i] == null);
         }
-        connection.exchange(new String[]{"update"},"collection", args);
+        connection.exchange(new String[]{"update"},"collection", registration.getLogin(), args);
     }
 
     /**
      * Triggers when user enters command "add_if_max" to terminal
      */
-    public void addIfMaxDragon(Connection connection, Object... data) {
+    public void addIfMaxDragon(Connection connection, Registration registration,Object... data) {
         DragonFields fieldNum;
         Dragon dragon;
         Processing manager = new Processing();
@@ -78,7 +78,8 @@ public class Validation {
         do {
             input = manager.scanner();
             fieldNum = DragonFields.getFieldByNumber(input);
-            dragon = (Dragon) connection.exchange(new String[]{"add_if_max"},"server1", new Object[]{fieldNum})[0];
+            dragon = (Dragon) connection.exchange(new String[]{"add_if_max"},"server1", registration.getLogin(),
+                    fieldNum)[0];
         } while (fieldNum == null || dragon == null);
 
         for (DragonFields fields: DragonFields.values()) {
@@ -98,12 +99,12 @@ public class Validation {
             } while (element == null);
             args[fields.ordinal()] = element;
         }
-        connection.exchange(new String[]{"add_if_max"},"server2", args);
+        connection.exchange(new String[]{"add_if_max"},"server2", registration.getLogin(), args);
     }
     /**
      * Triggers when user enters command "print_descending" to terminal
      */
-    public void fieldSelection(Connection connection, Registration registration, Object... data) throws IOException {
+    public void fieldSelection(Connection connection, Registration registration, Object... data) {
         DragonFields fieldNum;
         Processing manager = new Processing();
 
@@ -137,16 +138,17 @@ public class Validation {
     /**
      * Triggers when user enters command "execute_script" to terminal
      */
-    public void scriptParse(Connection connection, Object... data) {
+    public void scriptParse(Connection connection, Registration registration,Object... data) {
         try {
             File file = new Checks((String) data[1]).fileChecker();
             List<String> commands;
             FileManager.addFileToStack(file);
             commands = ScriptReader.read(file);
             if (commands.size() > 0) {
-                Object[] args = connection.exchange(new String[]{"execute_script"}, "script", new Object[]{commands});
+                Object[] args = connection.<List<String>, String>exchange(new String[]{"execute_script"}, "script",
+                        registration.getLogin(), commands);
                 int i = Arrays.binarySearch(args, "exit");
-                if(i >= 0) {
+                if (i >= 0) {
                     FileManager.clear();
                     exit(connection);
                 }

@@ -79,8 +79,8 @@ public class Connection {
         }
     }
 
-    public <S,G> G[] exchange(String[] input, String mode, S... objects) {
-        DataToServer<S> sender = new DataToServer<>(input, mode, objects);
+    public <S,G> G[] exchange(String[] input, String mode, String login, S... objects) {
+        DataToServer<S> sender = new DataToServer<>(input, mode, login, objects);
 
         try {
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());

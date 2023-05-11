@@ -35,7 +35,7 @@ public class Processing {
             input = scanner();
             if (input.length() > 0) {
                 if (input.matches("execute_script.*")) {
-                    new Validation().scriptParse(connection, input.split("\\s+"));
+                    new Validation().scriptParse(connection, registration,input.split("\\s+"));
                 } else {
                     try {
                         Object[] arguments = connection.<String, String>exchange(input.split("\\s+"), "user",
