@@ -13,7 +13,7 @@ public class UserAccess implements Command {
     @Override
     public ServerSender<Boolean> execute(String mode, String[] command, String login, Object... args) {
         if(mode.equals("newUser")) {
-            return newUser((String) args[0], (String) args[1]);
+            return newUser(login, (String) args[0]);
         } else if (mode.equals("existedUser")) {
             return existedUser(login, (String) args[0]);
         } else {
@@ -43,7 +43,8 @@ public class UserAccess implements Command {
                     return new ServerSender<>(List.of("Вы успешно вошли!"), true);
                 }
             }
-            return new ServerSender<>(List.of("Не удалось войти. Проверьте логин и пароль."), false);
+            return new ServerSender<>(List.of("Не удалось войти. Проверьте логин и пароль. " +
+                    "Зарегистрироваться? (y - да, n - нет)"), false);
         } catch (SQLException e) {e.printStackTrace();}
         return null;
     }

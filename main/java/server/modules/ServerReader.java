@@ -27,6 +27,7 @@ public class ServerReader {
         commands.put("exit", new ExitCommand());
         commands.put("show", new ShowCommand());
         commands.put("user_access", new UserAccess());
+        commands.put("show_all", new ShowAllCommand());
 
         commands.put("count_greater_than_age", new CountGreaterCommand());
         commands.put("execute_script", new ExecuteScriptCommand());

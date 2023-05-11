@@ -16,8 +16,8 @@ import java.util.Optional;
 public class DataBaseStuds extends DataBaseInitialization {
 
     public DataBaseStuds() {
-        super("jdbc:postgresql://localhost:2004/postgres",
-                "postgres", "SPbass1470O");
+        super("jdbc:postgresql://localhost:5432/studs",
+                "s335973", "RkJlHCVb6Ywpfcol");
     }
 
     public void insert(Dragon dragon) {

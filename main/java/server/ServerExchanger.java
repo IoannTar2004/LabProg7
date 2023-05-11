@@ -12,13 +12,14 @@ import java.util.concurrent.Executors;
 
 public class ServerExchanger {
     public static void main(String[] args) {
-        DataBaseInitialization.connect("jdbc:postgresql://localhost:2004/postgres",
-                "postgres", "SPbass1470O");
+        DataBaseInitialization.connect("jdbc:postgresql://localhost:5432/studs",
+                "s335973", "RkJlHCVb6Ywpfcol");
 
         try (ServerSocket serverSocket = new ServerSocket(30094)) {
             serverSocket.setReuseAddress(true);
             ExecutorService producers = Executors.newFixedThreadPool(10);
-            producers.submit(new Consumer());
+            ExecutorService consumers = Executors.newCachedThreadPool();
+            consumers.submit(new Consumer());
             while (true) {
                 Socket socket = serverSocket.accept();
                 producers.submit(new Producer(socket));

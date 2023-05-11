@@ -1,6 +1,5 @@
 package server.commands;
 
-import org.example.tools.InitializationDate;
 import server.database.DataBaseStuds;
 import server.manager.ObjectsManager;
 import server.modules.ServerSender;
@@ -27,9 +26,7 @@ public class InfoCommand implements Command {
             statement.setString(1, login);
             ResultSet set = statement.executeQuery();
             set.next();
-            return new ServerSender(List.of("Тип коллекции: ArrayDeque;",
-                    "Дата инициализации: " + InitializationDate.getDate() + ";",
-                    "Всего драконов в базе: " + objectsManager.fullLength() + ";",
+            return new ServerSender(List.of("Всего драконов в базе: " + objectsManager.fullLength() + ";",
                     "Ваших драконов: " + objectsManager.ownerLength(login) + ".\n"));
         } catch (SQLException e) {e.printStackTrace();}
         return null;

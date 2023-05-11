@@ -34,7 +34,7 @@ public class UpdateIdCommand implements Command {
 
          } else {
             try {
-                new ObjectsCollectionManager().getDragonById((String) args[0], Long.parseLong(command[1]));
+                new ObjectsCollectionManager().getDragonById(login, Long.parseLong(command[1]));
                 return new ServerSender<>(new String[]{"updateDragon", command[1]});
             } catch (ArrayIndexOutOfBoundsException e) {
                 return new ServerSender<>(List.of(OutputText.error("NoIdArgument")));
