@@ -13,7 +13,9 @@ import org.example.tools.OutputText;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Validation {
@@ -41,19 +43,23 @@ public class Validation {
     /**
      * Triggers when user enters command "update" to terminal
      */
-    public void updateDragon(Connection connection, Object... data) throws IOException {
+    public void updateDragon(Connection connection, Registration registration, Object... data) {
         Processing manager = new Processing();
-        Object[] args = new Object[7];
+        Object[] args = new Object[8];
+
+        args[0] = data[1];
+
         for (DragonFields fields: DragonFields.values()) {
-            args[fields.ordinal()] = null;
+            int i = fields.ordinal() + 1;
+            args[i] = null;
             System.out.println(OutputText.input(fields.getField() + "NewInput"));
             do {
                 String input = manager.scanner();
                 if (input.length() == 0) {
                     break;
                 }
-                args[fields.ordinal()] = new DragonOptions().dragonProcessing(fields, input);
-            } while (args[fields.ordinal()] == null);
+                args[i] = new DragonOptions().dragonProcessing(fields, input);
+            } while (args[i] == null);
         }
         connection.exchange(new String[]{"update"},"collection", args);
     }
@@ -61,7 +67,7 @@ public class Validation {
     /**
      * Triggers when user enters command "add_if_max" to terminal
      */
-    public void addIfMaxDragon(Connection connection, Object... data) throws IOException {
+    public void addIfMaxDragon(Connection connection, Object... data) {
         DragonFields fieldNum;
         Dragon dragon;
         Processing manager = new Processing();
