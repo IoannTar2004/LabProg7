@@ -20,7 +20,7 @@ public class ShowCommand implements Command {
      * It can print some fields in relation to numbers.
      */
     @Override
-    public ServerSender<String> execute(String mode, String[] command, Object... args) {
+    public ServerSender<String> execute(String mode, String[] command, String login, Object... args) {
         List<String> list = new LinkedList<>();
         ObjectsManager objectsManager = new ObjectsManager();
         ObjectsElements objectsElements = new ObjectsElements();
@@ -29,7 +29,7 @@ public class ShowCommand implements Command {
 
         if (objectsManager.fullLength() > 0) {
             for (int i = 0; i < objectsManager.fullLength(); i++) {
-                if (args[0].equals(dragonList.get(i).getUserLogin())) {
+                if (login.equals(dragonList.get(i).getUserLogin())) {
                     list.add(objectsElements.element(getters.getDragonByIndex(i), command));
                 }
             }

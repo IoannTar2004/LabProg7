@@ -11,11 +11,11 @@ import java.util.List;
 public class UserAccess implements Command {
 
     @Override
-    public ServerSender<Boolean> execute(String mode, String[] command, Object... args) {
+    public ServerSender<Boolean> execute(String mode, String[] command, String login, Object... args) {
         if(mode.equals("newUser")) {
             return newUser((String) args[0], (String) args[1]);
         } else if (mode.equals("existedUser")) {
-            return existedUser((String) args[0], (String) args[1]);
+            return existedUser(login, (String) args[0]);
         } else {
             return new ServerSender<>(List.of("Такой команды нет!"));
         }

@@ -15,9 +15,9 @@ public class RemoveFirstCommand implements Command {
      * Removes the first object in collection.
      */
     @Override
-    public ServerSender execute(String mode, String[] command, Object... args) {
+    public ServerSender execute(String mode, String[] command, String login, Object... args) {
         try {
-            new DataBaseStuds().removeFirst((String) args[0]);
+            new DataBaseStuds().removeFirst(login);
             return new ServerSender(List.of(OutputText.result("RemovedFirst")));
         } catch (NullPointerException e) {
             return new ServerSender(List.of(OutputText.result("Empty")));

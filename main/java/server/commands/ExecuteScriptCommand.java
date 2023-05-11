@@ -21,7 +21,7 @@ public class ExecuteScriptCommand implements Command{
      * Creates the list of commands received from txt file and runs.
      */
     @Override
-    public ServerSender execute(String mode, String[] command, Object... args) {
+    public ServerSender execute(String mode, String[] command, String login, Object... args) {
         if (Objects.equals(mode, "script")) {
             List<String> commands = (List<String>) args[0];
             List<String> result = new LinkedList<>();
@@ -32,8 +32,8 @@ public class ExecuteScriptCommand implements Command{
             int i = 0;
             while (!Objects.equals(commands.get(i), null)) {
                 String[] currentCommand = commands.get(i).split("\\s+");
-                ServerSender sender = ServerInvoker.invoke(ServerReader.getCommand(currentCommand[0]),
-                        "script", currentCommand,
+                ServerSender<?> sender = ServerInvoker.invoke(ServerReader.getCommand(currentCommand[0]),
+                        "script", currentCommand, login,
                         commands.get(i + 1), commands.get(i + 2),
                         commands.get(i + 3), commands.get(i + 4),
                         commands.get(i + 5), commands.get(i + 6),

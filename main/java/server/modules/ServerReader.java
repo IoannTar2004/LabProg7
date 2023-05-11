@@ -39,6 +39,7 @@ public class ServerReader {
     private String[] commandString;
     private String mode;
     private Object[] objects;
+    private String login;
     private Socket socket;
 
     public ServerReader(String[] commandString) {
@@ -51,12 +52,13 @@ public class ServerReader {
         SocketChannel socketChannel = null;
         try {
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-            DataToServer dataToServer = (DataToServer) in.readObject();
+            DataToServer<?> dataToServer = (DataToServer) in.readObject();
 
             command = commands.get(dataToServer.getCommandString()[0]);
             commandString = dataToServer.getCommandString();
             mode = dataToServer.getMode();
             objects = dataToServer.getObjects();
+            login = dataToServer.getLogin();
             this.socket = socket;
 
             System.out.println(Thread.currentThread().getName()+ " - " + this);
@@ -95,6 +97,10 @@ public class ServerReader {
 
     public Socket getSocket() {
         return socket;
+    }
+
+    public String getLogin() {
+        return login;
     }
 
     @Override

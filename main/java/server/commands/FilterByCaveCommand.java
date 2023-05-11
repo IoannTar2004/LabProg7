@@ -21,14 +21,14 @@ public class FilterByCaveCommand implements Command {
      * Prints objects if they have a same cave depth.
      */
     @Override
-    public ServerSender execute(String mode, String[] command, Object... args) {
+    public ServerSender execute(String mode, String[] command, String login, Object... args) {
         try {
             Checks checks = new Checks(command[1]);
             DragonCave cave1 = checks.caveChecker();
 
             if (cave1 != null) {
                 List<String> filteredList = new ObjectsCollectionManager().getAll().stream().filter(dragon ->
-                        Objects.equals(dragon.getCave(), cave1.getDepth()) && dragon.getUserLogin().equals(args[0])).
+                        Objects.equals(dragon.getCave(), cave1.getDepth()) && dragon.getUserLogin().equals(login)).
                 map(Dragon::toString).toList();
                 if (filteredList.size() == 0) {
                     return new ServerSender(List.of(OutputText.error("ObjectsNotFound"))) ;

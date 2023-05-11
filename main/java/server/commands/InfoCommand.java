@@ -18,19 +18,19 @@ public class InfoCommand implements Command {
      * Prints information about collection.
      */
     @Override
-    public ServerSender execute(String mode, String[] command, Object... args) {
+    public ServerSender execute(String mode, String[] command, String login, Object... args) {
         ObjectsManager objectsManager = new ObjectsManager();
         DataBaseStuds studs = new DataBaseStuds();
         try {
             PreparedStatement statement = studs.getConnection().prepareStatement("SELECT COUNT(*) FROM dragons WHERE " +
                     "user_login = ?");
-            statement.setString(1, (String) args[0]);
+            statement.setString(1, login);
             ResultSet set = statement.executeQuery();
             set.next();
             return new ServerSender(List.of("Тип коллекции: ArrayDeque;",
                     "Дата инициализации: " + InitializationDate.getDate() + ";",
                     "Всего драконов в базе: " + objectsManager.fullLength() + ";",
-                    "Ваших драконов: " + objectsManager.ownerLength((String) args[0]) + ".\n"));
+                    "Ваших драконов: " + objectsManager.ownerLength(login) + ".\n"));
         } catch (SQLException e) {e.printStackTrace();}
         return null;
     }

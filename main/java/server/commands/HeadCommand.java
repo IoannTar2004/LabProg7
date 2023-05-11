@@ -17,9 +17,8 @@ public class HeadCommand implements Command {
      * Prints the first object in collection if it is not empty.
      */
     @Override
-    public ServerSender execute(String mode, String[] command, Object... args) {
+    public ServerSender execute(String mode, String[] command, String login, Object... args) {
         ObjectsManager objectsManager = new ObjectsManager();
-        String login = (String) args[0];
         if (objectsManager.ownerLength(login) > 0) {
             Dragon dragon = new ObjectsCollectionManager().getAll().stream().
                     filter(dragon1 -> dragon1.getUserLogin().equals(login)).findFirst().orElse(null);

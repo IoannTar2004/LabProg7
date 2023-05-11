@@ -15,11 +15,11 @@ public class PrintDescendingCommand implements Command {
      * Prints objects in descending order by its value of field.
      */
     @Override
-    public ServerSender<String> execute(String mode, String[] command, Object... args) {
+    public ServerSender<String> execute(String mode, String[] command, String login, Object... args) {
         if (Objects.equals(mode, "script")) {
             executeWithScript(command, (String) args[0]);
         } else if (Objects.equals(mode, "collection")) {
-            return new ServerSender<>(Sort.sort((DragonFields) args[1], (String) args[0], arguments));
+            return new ServerSender<>(Sort.sort((DragonFields) args[1], login, arguments));
         } else {
             arguments = command;
             return new ServerSender<>(new String[]{"fieldSelection"});

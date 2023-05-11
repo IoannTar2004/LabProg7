@@ -13,7 +13,7 @@ public class HelpCommand implements Command {
      * Prints all commands.
      */
     @Override
-    public ServerSender execute(String mode, String[] command, Object... args) {
+    public ServerSender execute(String mode, String[] command, String login, Object... args) {
         return new ServerSender(List.of(OutputText.result("AllCommands")));
     }
 }

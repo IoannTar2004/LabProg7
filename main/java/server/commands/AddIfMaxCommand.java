@@ -23,7 +23,7 @@ public class AddIfMaxCommand implements Command {
      * @param args
      */
     @Override
-    public ServerSender execute(String mode, String[] command, Object... args) {
+    public ServerSender execute(String mode, String[] command, String login, Object... args) {
         if (Objects.equals(mode, "server1")) {
             if (args[0] == null) {
                 return new ServerSender(List.of(OutputText.error("FieldIncorrect")), new Object[]{null});
@@ -35,7 +35,7 @@ public class AddIfMaxCommand implements Command {
             }
             return new ServerSender(new Object[]{dragon});
         } else if (Objects.equals(mode, "server2")) {
-            new ObjectsManager().insert(args);
+            new ObjectsManager().insert(login, args);
             return new ServerSender(List.of(OutputText.result("Added")));
         } else {
            return new ServerSender(new Object[]{"addIfMaxDragon"});

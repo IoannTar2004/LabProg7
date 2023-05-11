@@ -19,14 +19,14 @@ public class RemoveByIdCommand implements Command {
      * Removes object by its ID.
      */
     @Override
-    public ServerSender execute(String mode, String[] command, Object... args) {
+    public ServerSender execute(String mode, String[] command, String login, Object... args) {
         try {
             ObjectsManager objectsManager = new ObjectsManager();
             DataBaseStuds studs = new DataBaseStuds();
             long id = Long.parseLong(command[1]);
 
-            Dragon dragon = new ObjectsCollectionManager().getDragonById((String) args[0],id);
-            studs.removeById((String) args[0], id);
+            Dragon dragon = new ObjectsCollectionManager().getDragonById(login,id);
+            studs.removeById(login, id);
             objectsManager.remove(dragon);
             return new ServerSender(List.of(OutputText.result("Removed")));
 

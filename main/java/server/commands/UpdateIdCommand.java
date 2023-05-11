@@ -15,18 +15,16 @@ import java.util.Objects;
  * Changes dragon's fields by its ID.
  */
 public class UpdateIdCommand implements Command {
-    private static long id;
     /**
      * Changes dragon's fields by its ID.
      */
     @Override
-    public ServerSender<String> execute(String mode, String[] command, Object... args) {
+    public ServerSender<String> execute(String mode, String[] command, String login, Object... args) {
          if (Objects.equals(mode, "script")) {
-             id = Long.parseLong(command[1]);
              for (DragonFields fields: DragonFields.values()) {
                  args[fields.ordinal()] = new DragonOptions().dragonProcessing(fields, (String) args[fields.ordinal()]);
              }
-             new ObjectsManager().replace(id, args);
+             //new ObjectsManager().replace(id, args);
              return new ServerSender<>(List.of(""));
 
          } else if (Objects.equals(mode, "collection")) {

@@ -8,7 +8,7 @@ import server.tools.IdGenerator;
 
 public class ObjectsManager extends CollectionManager {
 
-    public void insert(Object... args) {
+    public void insert(String login, Object... args) {
 
         Dragon dragon = new Dragon();
 
@@ -17,6 +17,7 @@ public class ObjectsManager extends CollectionManager {
                 dragon = new DragonOptions().dragonInput(dragon, fields, args[fields.ordinal()]);
             }
         }
+        dragon.setUserLogin(login);
         dragon.setId(IdGenerator.generate());
         new DataBaseStuds().insert(dragon);
         dragons.add(dragon);

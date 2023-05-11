@@ -14,5 +14,5 @@ public interface Command extends Serializable {
      * @param command entered or read command (with arguments if they are required)
      * @param args    arguments are supplied to execute(). Contains some special objects.
      */
-    ServerSender execute(String mode, String[] command, Object... args);
+    ServerSender execute(String mode, String[] command, String login, Object... args);
 }

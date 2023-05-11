@@ -18,7 +18,7 @@ public class ExitCommand implements Command {
      * Saves collection to entered xml file.
      */
     @Override
-    public ServerSender execute(String mode, String[] command, Object... args){
+    public ServerSender execute(String mode, String[] command, String login, Object... args){
         try {
             PrintWriter writer = new PrintWriter(new FileWriter("objects.xml"));
 

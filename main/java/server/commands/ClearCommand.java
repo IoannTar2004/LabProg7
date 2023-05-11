@@ -17,9 +17,8 @@ public class ClearCommand implements Command {
      * Clears collection.
      */
     @Override
-    public ServerSender execute(String mode, String[] command, Object... args) {
+    public ServerSender execute(String mode, String[] command, String login, Object... args) {
         DataBaseStuds studs = new DataBaseStuds();
-        String login = (String) args[0];
         try {
             PreparedStatement statement = studs.getConnection().prepareStatement("DELETE FROM dragons WHERE user_login=?");
             statement.setString(1, login);

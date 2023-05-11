@@ -17,13 +17,13 @@ public class CountGreaterCommand implements Command {
      * Count amount of objects which have greater age than entered.
      */
     @Override
-    public ServerSender execute(String mode, String[] command, Object... args) {
+    public ServerSender execute(String mode, String[] command, String login, Object... args) {
         try {
             Checks checks = new Checks(command[1]);
             Integer age1 = checks.ageChecker();
             if (age1 != null) {
                 long count = new ObjectsCollectionManager().getAll().stream().
-                        filter(dragon1 -> dragon1.getUserLogin().equals(args[0]) && dragon1.getAge() > age1).count();
+                        filter(dragon1 -> dragon1.getUserLogin().equals(login) && dragon1.getAge() > age1).count();
                 return new ServerSender(List.of(String.valueOf(count)));
             } else {
                 return new ServerSender(List.of("Возраст - целое положительное число"));

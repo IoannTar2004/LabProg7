@@ -14,7 +14,7 @@ public class Consumer implements Runnable {
                     ServerReader reader = TaskQueue.poll();
 
                     ServerSender serverSender = ServerInvoker.invoke(reader.getCommand(), reader.getMode(),
-                            reader.getCommandString(), reader.getObjects());
+                            reader.getCommandString(), reader.getLogin(),reader.getObjects());
                     serverSender.setSocket(reader.getSocket());
                     new Thread(serverSender).start();
 
