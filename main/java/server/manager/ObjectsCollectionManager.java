@@ -6,8 +6,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ObjectsCollectionManager extends CollectionManager {
-    public Dragon getDragonById(String login, Long id) throws NullPointerException {
+    public Dragon getDragonById(String login, long id) throws NullPointerException {
         Dragon dragon = dragons.stream().filter(dragon1 -> dragon1.getId() == id && dragon1.getUserLogin().equals(login))
+                .findFirst().orElse(null);
+        if (dragon != null) {
+            return dragon;
+        }
+        throw new NullPointerException();
+    }
+
+    public Dragon getDragonById(long id) {
+        Dragon dragon = dragons.stream().filter(dragon1 -> dragon1.getId() == id)
                 .findFirst().orElse(null);
         if (dragon != null) {
             return dragon;

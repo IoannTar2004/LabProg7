@@ -54,13 +54,13 @@ public class ObjectsManager extends CollectionManager {
         }
     }
 
-    public Dragon replace(Long id, Object... args) {
-        Dragon dragon = null;// = new ObjectsCollectionManager().getDragonById(id);
+    public void replace(Object... args) {
+        long id = Long.parseLong((String) args[0]);
+        Dragon dragon = new ObjectsCollectionManager().getDragonById(id);
         for(DragonFields fields: DragonFields.values()) {
-            if (args[fields.ordinal()] != null) {
-                dragon = new DragonOptions().dragonInput(dragon, fields, args[fields.ordinal()]);
+            if (args[fields.ordinal()+1] != null) {
+                dragon = new DragonOptions().dragonInput(dragon, fields, args[fields.ordinal()+1]);
             }
         }
-        return dragon;
     }
 }

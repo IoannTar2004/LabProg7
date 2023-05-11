@@ -1,6 +1,6 @@
 package server.database;
 
-import org.example.collections.Dragon;
+import org.example.collections.*;
 import server.manager.ObjectsCollectionManager;
 import server.manager.ObjectsManager;
 
@@ -8,6 +8,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public class DataBaseStuds extends DataBaseInitialization {
@@ -54,6 +57,36 @@ public class DataBaseStuds extends DataBaseInitialization {
             statement.setLong(1, id);
             statement.setString(2, login);
             statement.execute();
+        } catch (SQLException e) {e.printStackTrace();}
+    }
+
+    public void update(Object... attributes) {
+        StringBuilder request = new StringBuilder("UPDATE dragons SET ");
+        int len = 0;
+        for (int j = 0; j < attributes.length; j++)  {
+            if (attributes[j] != null) {len++;}
+        }
+        for (DragonFields fields: DragonFields.values()) {
+            int i = fields.ordinal() + 1;
+            if (attributes[i] != null) {
+                request.append(fields.getField()).append("=");
+                switch (fields) {
+                    case NAME -> request.append("'").append(attributes[i]).append("'");
+                    case COORDINATES -> request.append("'").append(attributes[i].toString()).append("'");
+                    case AGE ->  request.append(attributes[i]);
+                    case COLOR -> request.append("'").append(((Color) attributes[i]).getColor()).append("'");
+                    case TYPE -> request.append("'").append(((DragonType) attributes[i]).getType()).append("'");
+                    case CHARACTER -> request.append("'").append(((DragonCharacter) attributes[i]).getCharacter()).append("'");
+                    case CAVE -> request.append(((DragonCave) attributes[i]).getDepth());
+                }
+                if (i < (len - 1)) {
+                    request.append(", ");
+                }
+            }
+        }
+        request.append(" where id=").append(attributes[0]);
+        try {
+            getConnection().createStatement().execute(String.valueOf(request));
         } catch (SQLException e) {e.printStackTrace();}
     }
 }
