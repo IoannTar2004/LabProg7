@@ -5,6 +5,10 @@ import org.example.tools.OutputText;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class Registration {
     private String login;
@@ -53,7 +57,12 @@ public class Registration {
                 System.out.println("Превышена максимальная длина пароля (32)!");
             }
         } while (password.equals("") || password.length() > 32);
-        this.password = password;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-224");
+            byte[] bytes = md.digest(password.getBytes());
+            BigInteger integer = new BigInteger(1, bytes);
+            this.password = integer.toString(16);
+        } catch (NoSuchAlgorithmException e) {e.printStackTrace();}
     }
 
     public String getLogin() {
