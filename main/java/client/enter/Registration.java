@@ -1,6 +1,7 @@
 package client.enter;
 
 import client.modules.Processing;
+import client.modules.Validation;
 import org.example.tools.OutputText;
 
 import java.io.IOException;
@@ -15,19 +16,26 @@ public class Registration {
     private String password;
 
     public void register(boolean register, Connection connection) {
-        while(true) {
-            this.setLogin();
-            this.setPassword();
-            if (register) {
-                if (connection.<String, Boolean>exchange(new String[]{"user_access"}, "existedUser", this.login, this.password)[0]) {
-                    return;
-                }
-            } else {
-                if (connection.<String, Boolean>exchange(new String[]{"user_access"}, "newUser", this.login, this.password)[0]) {
-                    return;
+        Validation validation = new Validation();
+        try {
+            while (true) {
+                this.setLogin();
+                this.setPassword();
+                if (register) {
+                    if (connection.<String, Boolean>exchange(new String[]{"user_access"}, "existedUser", this.login, this.password)[0]) {
+                        return;
+                    }
+                    if (validation.yesNoInput()) {
+                        register(false, connection);
+                        return;
+                    }
+                } else {
+                    if (connection.<String, Boolean>exchange(new String[]{"user_access"}, "newUser", this.login, this.password)[0]) {
+                        return;
+                    }
                 }
             }
-        }
+        } catch (NullPointerException ignored) {} //выбрасывается в случае отключения сервера во время авторизации. Игнорирую.
     }
 
     public void setLogin() {

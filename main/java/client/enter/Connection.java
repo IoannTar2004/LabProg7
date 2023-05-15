@@ -40,7 +40,6 @@ public class Connection {
      * Method processes input of server host and port
      * @return socketChannel
      */
-    @Deprecated
     public void connectionToServer() {
         Processing processing = new Processing();
         System.out.println(OutputText.startInformation("ServerInfo"));

@@ -15,7 +15,7 @@ public class ProgramStart {
         Validation validation = new Validation();
         Registration registration = new Registration();
 
-        connection.waitingForConnection();
+        connection.connectionToServer();
 
         System.out.print("Данная программа хранит все объекты авторизованных пользователей в базе данных.\n" +
                 "Вы уже зарегистрированы? "); //TODO text
