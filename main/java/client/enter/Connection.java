@@ -72,7 +72,7 @@ public class Connection {
     public void waitingForConnection() throws UnresolvedAddressException {
         while (true) {
             try {
-                socket = new Socket("localhost", 30094);
+                socket = new Socket(host, port);
                 return;
             } catch (IOException ignored) {}
         }
